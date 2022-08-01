@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class GameLauncher {
     public static void main(String[] args) {
         boolean isValid = false;
+        int choice = 0;
 
         System.out.println("---------------------------------------------------------------");
         System.out.println("Welcome to Hangman!");
@@ -12,7 +13,7 @@ public class GameLauncher {
             Scanner input = new Scanner(System.in);
             System.out.println("Please choose a difficulty level: 1-Easy 2-Medium 3-Hard");
             try{
-                int choice = input.nextInt();
+                choice = input.nextInt();
                 if (choice <= 3 && choice >= 1){
                     isValid = true;
                 } else {
@@ -26,5 +27,7 @@ public class GameLauncher {
                 System.exit(1);
             }
         }
+
+        String selectedWord = WordGenerator.wordGenerator(choice);
     }
 }
