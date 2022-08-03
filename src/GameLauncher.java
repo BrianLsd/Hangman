@@ -1,8 +1,11 @@
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class GameLauncher {
     public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
         boolean isValid = false;
         int choice = 0;
 
@@ -10,7 +13,6 @@ public class GameLauncher {
         System.out.println("Welcome to Hangman!");
 
         while (!isValid){
-            Scanner input = new Scanner(System.in);
             System.out.println("Please choose a difficulty level: 1-Easy 2-Medium 3-Hard");
             try{
                 choice = input.nextInt();
@@ -21,6 +23,7 @@ public class GameLauncher {
                 }
             }catch (InputMismatchException e){
                 System.out.println("Invalid choice, please enter an integer");
+                input.nextLine();
             }catch (Exception ex){
                 System.out.println("Unexpected error, closing program");
                 ex.printStackTrace();
@@ -28,6 +31,18 @@ public class GameLauncher {
             }
         }
 
-        String selectedWord = WordGenerator.wordGenerator(choice);
+        String selectedWord = WordProcessor.wordsFetch(choice);
+
+        int wrongCounter = 0;
+        List<Character> guesses = new ArrayList<>();
+        while (true){
+            HangmanDrawer.drawHangman(wrongCounter);
+            if (wrongCounter >= 6){
+                System.out.println("Game Over!");
+                System.out.printf("The word was: \"%s\"%n", selectedWord);
+                break;
+            }
+
+        }
     }
 }

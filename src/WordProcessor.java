@@ -2,8 +2,8 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.*;
 
-public class WordGenerator {
-    public static String wordGenerator(int choice){
+public class WordProcessor {
+    public static String wordsFetch(int choice){
         List<String> wordList = new ArrayList<>();
         Random ran = new Random();
 
@@ -40,5 +40,21 @@ public class WordGenerator {
         }
 
         return wordList.get(ran.nextInt(wordList.size()));
+    }
+
+    public static String getUserGuess(Scanner input){
+        System.out.println("Enter a single letter to guess: ");
+        return input.nextLine();
+    }
+
+    public static void printWordState(List<Character> guesses, String word){
+        for (char c : word.toCharArray()){
+            if (guesses.contains(c)){
+                System.out.printf("%c ", c);
+            } else {
+                System.out.print("_ ");
+            }
+        }
+        System.out.println();
     }
 }
