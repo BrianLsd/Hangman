@@ -18,7 +18,7 @@ public class HangmanDrawer {
                 System.out.println("     |");
                 System.out.println("     |");
                 System.out.println("=======");
-                System.out.println("Wrong guess!");
+                System.out.println("Wrong guess, take another shot");
                 break;
             case 2:
                 System.out.println("-+---+-");
@@ -28,7 +28,7 @@ public class HangmanDrawer {
                 System.out.println("     |");
                 System.out.println("     |");
                 System.out.println("=======");
-                System.out.println("Wrong guess!");
+                System.out.println("Wrong guess, take another shot");
                 break;
             case 3:
                 System.out.println("-+---+-");
@@ -38,7 +38,7 @@ public class HangmanDrawer {
                 System.out.println("     |");
                 System.out.println("     |");
                 System.out.println("=======");
-                System.out.println("Wrong guess!");
+                System.out.println("Wrong guess, take another shot");
                 break;
             case 4:
                 System.out.println("-+---+-");
@@ -48,7 +48,7 @@ public class HangmanDrawer {
                 System.out.println("     |");
                 System.out.println("     |");
                 System.out.println("=======");
-                System.out.println("Wrong guess!");
+                System.out.println("Wrong guess, take another shot");
                 break;
             case 5:
                 System.out.println("-+---+-");
@@ -58,7 +58,7 @@ public class HangmanDrawer {
                 System.out.println("/    |");
                 System.out.println("     |");
                 System.out.println("=======");
-                System.out.println("Wrong guess!");
+                System.out.println("Wrong guess, take another shot");
                 break;
             case 6:
                 System.out.println("-+---+-");
@@ -68,7 +68,7 @@ public class HangmanDrawer {
                 System.out.println("/ \\  |");
                 System.out.println("     |");
                 System.out.println("=======");
-                System.out.println("Wrong guess!");
+                System.out.println("Wrong guess");
                 break;
         }
     }

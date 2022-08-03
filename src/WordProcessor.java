@@ -42,9 +42,28 @@ public class WordProcessor {
         return wordList.get(ran.nextInt(wordList.size()));
     }
 
-    public static String getUserGuess(Scanner input){
+    public static boolean getUserGuess(List<Character> guesses, String word){
+        Scanner input = new Scanner(System.in);
         System.out.println("Enter a single letter to guess: ");
-        return input.nextLine();
+        String letterGuess = input.nextLine().toLowerCase();
+        if (letterGuess.matches("[a-z]")){
+            guesses.add(letterGuess.charAt(0));
+            return word.contains(letterGuess); // correct guess
+        } else {
+            System.out.println("Invalid input, please only guess a single letter");
+            return false; // if user's guess is invalid, count it as incorrect
+        }
+    }
+
+    public static void printGuessedLetters(List<Character> guesses){
+        if (guesses.size() != 0){
+            System.out.print("You have guessed: ");
+            for (char c : guesses){
+                System.out.printf("\"%c\" ", c);
+            }
+            System.out.println();
+        }
+
     }
 
     public static void printWordState(List<Character> guesses, String word){
@@ -56,5 +75,15 @@ public class WordProcessor {
             }
         }
         System.out.println();
+    }
+
+    public static boolean checkIfUserWins(List<Character> guesses, String word){
+        int correctCounter = 0;
+        for (char c : word.toCharArray()){
+            if (guesses.contains(c)){
+                correctCounter++;
+            }
+        }
+        return (word.length() == correctCounter);
     }
 }
