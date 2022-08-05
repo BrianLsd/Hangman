@@ -3,9 +3,8 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class WordProcessor {
-    public static String wordsFetch(int choice){
+    public static List<String> wordsFetch(int choice){
         List<String> wordList = new ArrayList<>();
-        Random ran = new Random();
 
         if (choice == 1){
             try(Scanner input = new Scanner(Paths.get("EasyWords.txt"))){
@@ -39,6 +38,11 @@ public class WordProcessor {
             }
         }
 
+        return wordList;
+    }
+
+    public static String wordGenerator(List<String> wordList){
+        Random ran = new Random();
         return wordList.get(ran.nextInt(wordList.size()));
     }
 

@@ -4,6 +4,10 @@ public class GameLauncher {
     public static void main(String[] args) {
         System.out.println("---------------------------------------------------------------");
         System.out.println("Welcome to Hangman!");
+        List<String> easyWords = WordProcessor.wordsFetch(1);
+        List<String> mediumWords = WordProcessor.wordsFetch(2);
+        List<String> hardWords = WordProcessor.wordsFetch(3);
+        String selectedWord;
         String continueGame;
 
         do {
@@ -30,7 +34,18 @@ public class GameLauncher {
                 }
             }
 
-            String selectedWord = WordProcessor.wordsFetch(choice); // generated word from a file
+            // remove a word from the lists after a random word has been generated
+            // so random words won't repeat until the end
+            if (choice == 1){
+                selectedWord = WordProcessor.wordGenerator(easyWords);
+                easyWords.remove(String.valueOf(selectedWord));
+            } else if (choice == 2){
+                selectedWord = WordProcessor.wordGenerator(mediumWords);
+                mediumWords.remove(String.valueOf(selectedWord));
+            } else {
+                selectedWord = WordProcessor.wordGenerator(hardWords);
+                hardWords.remove(String.valueOf(selectedWord));
+            }
 
             int wrongCounter = 0;
             List<Character> guesses = new ArrayList<>();
@@ -51,11 +66,22 @@ public class GameLauncher {
                     break;
                 }
             }
+
+            // refill the lists after all words have been used
+            if (easyWords.size() == 0){
+                easyWords = WordProcessor.wordsFetch(1);
+            }
+            if (mediumWords.size() == 0){
+                mediumWords = WordProcessor.wordsFetch(2);
+            }
+            if (hardWords.size() == 0){
+                hardWords = WordProcessor.wordsFetch(3);
+            }
+
             System.out.println();
             System.out.println("Press 1 to play again, or press any other keys to quit");
             input.nextLine();
             continueGame = input.nextLine();
         } while (continueGame.equals("1"));
-
     }
 }
