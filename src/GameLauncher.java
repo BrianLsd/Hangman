@@ -1,4 +1,9 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class GameLauncher {
     public static void main(String[] args) {
@@ -9,6 +14,12 @@ public class GameLauncher {
         List<String> hardWords = WordProcessor.wordsFetch(3);
         String selectedWord;
         String continueGame;
+
+        // continuously playing background music until the program ends
+        ExecutorService backGroundMusic = Executors.newCachedThreadPool();
+        ExecutorService soundEffects = Executors.newCachedThreadPool();
+        backGroundMusic.execute(new AudioPlayer("soundClips/bgm.wav"));
+        backGroundMusic.shutdown();
 
         do {
             Scanner input = new Scanner(System.in);
@@ -54,15 +65,20 @@ public class GameLauncher {
                 if (wrongCounter >= 6){
                     System.out.println("Game Over, You lost...");
                     System.out.printf("The word was: \"%s\"%n", selectedWord);
+                    soundEffects.execute(new SoundEffectsPlayer("soundClips/gameover.wav"));
                     break;
                 }
                 WordProcessor.printWordState(guesses, selectedWord);
                 WordProcessor.printGuessedLetters(guesses);
                 if (!WordProcessor.getUserGuess(guesses, selectedWord)){
                     wrongCounter++;
+                    soundEffects.execute(new SoundEffectsPlayer("soundClips/incorrect.wav"));
+                } else {
+                    soundEffects.execute(new SoundEffectsPlayer("soundClips/correct.wav"));
                 }
                 if (WordProcessor.checkIfUserWins(guesses, selectedWord)){
                     System.out.println("Congrats! You win!");
+                    soundEffects.execute(new SoundEffectsPlayer("soundClips/victory.wav"));
                     break;
                 }
             }
@@ -83,5 +99,6 @@ public class GameLauncher {
             input.nextLine();
             continueGame = input.nextLine();
         } while (continueGame.equals("1"));
+        soundEffects.shutdown();
     }
 }
