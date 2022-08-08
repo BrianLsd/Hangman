@@ -66,4 +66,10 @@ public class HangmanDrawer {
                 break;
         }
     }
+    public static void drawLogo(){
+        System.out.println(
+                " |_|  /\\  |\\ | /__ |\\/|  /\\  |\\ | \n" +
+                " | | /--\\ | \\| \\_| |  | /--\\ | \\| \n" +
+                "                                  ");
+    }
 }
