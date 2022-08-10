@@ -1,47 +1,43 @@
-import java.io.IOException;
-import java.nio.file.Paths;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class WordProcessor {
-    public static List<String> wordsFetch(int choice){
-        List<String> wordList = new ArrayList<>();
+    public static List<String> wordListGenerator(int choice){
+        WordProcessor wordProcessor = new WordProcessor();
 
         if (choice == 1){
-            try(Scanner input = new Scanner(Paths.get("EasyWords.txt"))){
-                while (input.hasNext()){
-                    wordList.add(input.next());
-                }
-            } catch (IOException | NoSuchElementException | IllegalStateException e){
-                e.printStackTrace();
-                System.out.println("Unexpected error, closing program");
-                System.exit(1);
-            }
-        } else if (choice == 2){
-            try(Scanner input = new Scanner(Paths.get("MediumWords.txt"))){
-                while (input.hasNext()){
-                    wordList.add(input.next());
-                }
-            } catch (IOException | NoSuchElementException | IllegalStateException e){
-                e.printStackTrace();
-                System.out.println("Unexpected error, closing program");
-                System.exit(1);
-            }
-        } else {
-            try(Scanner input = new Scanner(Paths.get("HardWords.txt"))){
-                while (input.hasNext()){
-                    wordList.add(input.next());
-                }
-            } catch (IOException | NoSuchElementException | IllegalStateException e){
-                e.printStackTrace();
-                System.out.println("Unexpected error, closing program");
-                System.exit(1);
-            }
+            return wordProcessor.readFile("EasyWords.txt");
         }
+        else if (choice == 2){
+            return wordProcessor.readFile("MediumWords.txt");
+        }
+        else {
+            return wordProcessor.readFile("HardWords.txt");
+        }
+    }
 
+    public List<String> readFile(String file){
+        List<String> wordList = new ArrayList<>();
+        try {
+            InputStream inputStream = getClass().getResourceAsStream(file);
+            try(Scanner input = new Scanner(new InputStreamReader(Objects.requireNonNull(inputStream)))) {
+                while (input.hasNext()){
+                    wordList.add(input.next());
+                }
+            } catch (NoSuchElementException | IllegalStateException e){
+                e.printStackTrace();
+                System.out.println("Not able to load the file");
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            System.out.println("Unexpected error, program closing...");
+            System.exit(1);
+        }
         return wordList;
     }
 
-    public static String wordGenerator(List<String> wordList){
+    public static String GenerateWord(List<String> wordList){
         Random ran = new Random();
         return wordList.get(ran.nextInt(wordList.size()));
     }

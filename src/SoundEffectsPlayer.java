@@ -1,6 +1,6 @@
 import javax.sound.sampled.*;
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 public class SoundEffectsPlayer implements Runnable{
     private final String path;
@@ -9,11 +9,15 @@ public class SoundEffectsPlayer implements Runnable{
         this.path = path;
     }
 
+    // URL for the jar file to access the audio
+    public URL soundEffectURL(){
+        return getClass().getResource(path);
+    }
+
     @Override
     public void run() {
         try {
-            File music = new File(path);
-            AudioInputStream audio = AudioSystem.getAudioInputStream(music);
+            AudioInputStream audio = AudioSystem.getAudioInputStream(soundEffectURL());
             Clip clip = AudioSystem.getClip();
             clip.open(audio);
             clip.start();

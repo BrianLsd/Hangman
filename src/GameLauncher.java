@@ -8,16 +8,16 @@ import java.util.concurrent.Executors;
 public class GameLauncher {
     public static void main(String[] args) {
         HangmanDrawer.drawLogo();
-        List<String> easyWords = WordProcessor.wordsFetch(1);
-        List<String> mediumWords = WordProcessor.wordsFetch(2);
-        List<String> hardWords = WordProcessor.wordsFetch(3);
+        List<String> easyWords = WordProcessor.wordListGenerator(1);
+        List<String> mediumWords = WordProcessor.wordListGenerator(2);
+        List<String> hardWords = WordProcessor.wordListGenerator(3);
         String selectedWord;
         String continueGame;
 
         // continuously playing background music until the program ends
         ExecutorService backGroundMusic = Executors.newCachedThreadPool();
         ExecutorService soundEffects = Executors.newCachedThreadPool();
-        backGroundMusic.execute(new AudioPlayer("soundClips/bgm.wav"));
+        backGroundMusic.execute(new AudioPlayer("bgm.wav"));
         backGroundMusic.shutdown();
 
         do {
@@ -47,13 +47,13 @@ public class GameLauncher {
             // remove a word from the lists after a random word has been generated
             // so random words won't repeat until the end
             if (choice == 1){
-                selectedWord = WordProcessor.wordGenerator(easyWords);
+                selectedWord = WordProcessor.GenerateWord(easyWords);
                 easyWords.remove(String.valueOf(selectedWord));
             } else if (choice == 2){
-                selectedWord = WordProcessor.wordGenerator(mediumWords);
+                selectedWord = WordProcessor.GenerateWord(mediumWords);
                 mediumWords.remove(String.valueOf(selectedWord));
             } else {
-                selectedWord = WordProcessor.wordGenerator(hardWords);
+                selectedWord = WordProcessor.GenerateWord(hardWords);
                 hardWords.remove(String.valueOf(selectedWord));
             }
 
@@ -64,33 +64,33 @@ public class GameLauncher {
                 if (wrongCounter >= 6){
                     System.out.println("Game Over, You lost...");
                     System.out.printf("The word was: \"%s\"%n", selectedWord);
-                    soundEffects.execute(new SoundEffectsPlayer("soundClips/gameover.wav"));
+                    soundEffects.execute(new SoundEffectsPlayer("gameover.wav"));
                     break;
                 }
                 WordProcessor.printWordState(guesses, selectedWord);
                 WordProcessor.printGuessedLetters(guesses);
                 if (!WordProcessor.getUserGuess(guesses, selectedWord)){
                     wrongCounter++;
-                    soundEffects.execute(new SoundEffectsPlayer("soundClips/incorrect.wav"));
+                    soundEffects.execute(new SoundEffectsPlayer("incorrect.wav"));
                 } else {
-                    soundEffects.execute(new SoundEffectsPlayer("soundClips/correct.wav"));
+                    soundEffects.execute(new SoundEffectsPlayer("correct.wav"));
                 }
                 if (WordProcessor.checkIfUserWins(guesses, selectedWord)){
                     System.out.println("Congrats! You win!");
-                    soundEffects.execute(new SoundEffectsPlayer("soundClips/victory.wav"));
+                    soundEffects.execute(new SoundEffectsPlayer("victory.wav"));
                     break;
                 }
             }
 
             // refill the lists after all words have been used
             if (easyWords.size() == 0){
-                easyWords = WordProcessor.wordsFetch(1);
+                easyWords = WordProcessor.wordListGenerator(1);
             }
             if (mediumWords.size() == 0){
-                mediumWords = WordProcessor.wordsFetch(2);
+                mediumWords = WordProcessor.wordListGenerator(2);
             }
             if (hardWords.size() == 0){
-                hardWords = WordProcessor.wordsFetch(3);
+                hardWords = WordProcessor.wordListGenerator(3);
             }
 
             System.out.println();
