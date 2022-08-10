@@ -7,7 +7,6 @@ import java.util.concurrent.Executors;
 
 public class GameLauncher {
     public static void main(String[] args) {
-        System.out.println("--------------------------------------------------------");
         HangmanDrawer.drawLogo();
         List<String> easyWords = WordProcessor.wordsFetch(1);
         List<String> mediumWords = WordProcessor.wordsFetch(2);

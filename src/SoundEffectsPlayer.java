@@ -20,7 +20,7 @@ public class SoundEffectsPlayer implements Runnable{
         } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e){
             e.printStackTrace();
             System.exit(1);
-            System.out.println("The audio is not supported, program closing...");
+            System.out.println("The audio clip is not supported, program closing...");
         }
     }
 }
