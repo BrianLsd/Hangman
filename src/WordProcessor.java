@@ -3,7 +3,7 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class WordProcessor {
-    public static List<String> wordListGenerator(int choice){
+    public static List<String> wordListGenerator(int choice){ // pick wordList based on user's choice
         WordProcessor wordProcessor = new WordProcessor();
 
         if (choice == 1){
@@ -17,7 +17,7 @@ public class WordProcessor {
         }
     }
 
-    public List<String> readFile(String file){
+    public List<String> readFile(String file){ // read all words from the files
         List<String> wordList = new ArrayList<>();
         try {
             InputStream inputStream = getClass().getResourceAsStream(file);
@@ -37,12 +37,12 @@ public class WordProcessor {
         return wordList;
     }
 
-    public static String GenerateWord(List<String> wordList){
+    public static String GenerateWord(List<String> wordList){ // randomly select a word from the wordList
         Random ran = new Random();
         return wordList.get(ran.nextInt(wordList.size()));
     }
 
-    public static boolean getUserGuess(List<Character> guesses, String word){
+    public static boolean getUserGuess(List<Character> guesses, String word){ // get user input and check if the selected word contains the char
         Scanner input = new Scanner(System.in);
         System.out.println("Enter a single letter to guess: ");
         String letterGuess = input.nextLine().toLowerCase();
@@ -55,7 +55,7 @@ public class WordProcessor {
         }
     }
 
-    public static void printGuessedLetters(List<Character> guesses){
+    public static void printGuessedLetters(List<Character> guesses){ // print what letters the user has guessed
         if (guesses.size() != 0){
             System.out.print("You have guessed: ");
             for (char c : guesses){
@@ -66,7 +66,7 @@ public class WordProcessor {
 
     }
 
-    public static void printWordState(List<Character> guesses, String word){
+    public static void printWordState(List<Character> guesses, String word){ // print the word state
         for (char c : word.toCharArray()){
             if (guesses.contains(c)){
                 System.out.printf("%c ", c);
@@ -77,7 +77,7 @@ public class WordProcessor {
         System.out.println();
     }
 
-    public static boolean checkIfUserWins(List<Character> guesses, String word){
+    public static boolean checkIfUserWins(List<Character> guesses, String word){ // check if the number of correct guess reaches the word length
         int correctCounter = 0;
         for (char c : word.toCharArray()){
             if (guesses.contains(c)){

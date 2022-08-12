@@ -61,7 +61,7 @@ public class GameLauncher {
             List<Character> guesses = new ArrayList<>();
             while (true){
                 HangmanDrawer.drawHangman(wrongCounter);
-                if (wrongCounter >= 6){
+                if (wrongCounter >= 6){ // when the man has been hung
                     System.out.println("Game Over, You lost...");
                     System.out.printf("The word was: \"%s\"%n", selectedWord);
                     soundEffects.execute(new SoundEffectsPlayer("gameover.wav"));
@@ -69,13 +69,13 @@ public class GameLauncher {
                 }
                 WordProcessor.printWordState(guesses, selectedWord);
                 WordProcessor.printGuessedLetters(guesses);
-                if (!WordProcessor.getUserGuess(guesses, selectedWord)){
+                if (!WordProcessor.getUserGuess(guesses, selectedWord)){ // wrong guess
                     wrongCounter++;
                     soundEffects.execute(new SoundEffectsPlayer("incorrect.wav"));
-                } else {
+                } else { // right guess
                     soundEffects.execute(new SoundEffectsPlayer("correct.wav"));
                 }
-                if (WordProcessor.checkIfUserWins(guesses, selectedWord)){
+                if (WordProcessor.checkIfUserWins(guesses, selectedWord)){ // all letters have been guessed
                     System.out.println("Congrats! You win!");
                     soundEffects.execute(new SoundEffectsPlayer("victory.wav"));
                     break;
